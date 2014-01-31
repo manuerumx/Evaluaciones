@@ -1,2 +1,14 @@
-#x
-	p heellasdsad
+.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
+	.container
+		.navbar-header
+			button(type="button", data-toggle="collapse" data-target=".navbar-collapse").navbar-toggle
+				span.sr-only Toogle navigation
+				span.icon-bar
+				span.icon-bar
+				span.icon-bar
+			a(href="#").navbar-brand #{title}
+		.collapse.navbar-collapse
+			ul.nav.navbar-nav
+				li.active: a(href="#") Home
+				li: a(href="#") About
+				li: a(href="#") Contact
