@@ -13,7 +13,7 @@ var questionsSchema = new Schema({
 		modifyby 		: 	String
 	},
 	answers : [{
-		answers			: 	String,
+		answer			: 	String,
 		correct			: 	Boolean
 	}]
 });
