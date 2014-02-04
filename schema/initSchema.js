@@ -11,6 +11,19 @@ var userSchema = new Schema({
 	updated = Date,
 	active = Boolean
 	usertype = {
-
+		evaluated = Boolean,
 	}
 });
+
+/*
+var testTypeSchema = new Schema({
+	testtype = String
+});
+*/
+
+var areaSchema = new Schema({
+	areaname = String,
+	areadesc = String
+});
+
+var 
