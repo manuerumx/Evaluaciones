@@ -44,7 +44,8 @@ exports.show_edit = function (req, res, next){
 }
 
 exports.update = function (req, res, next){
-
+	var id = req.params.id;
+	
 }
 
 exports.remove = function (req, res, next){
