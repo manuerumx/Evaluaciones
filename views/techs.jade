@@ -1,0 +1,15 @@
+extends layout
+block content
+	h2 Tabla de Tecnologias
+	table(border='1')
+		tr
+			th Tecnologias
+			th Descripcion
+			th Fecha de Creación
+			if (technologys)
+				each technology in technologys
+					tr
+						td
+							a(href="/technology/" + technology._id.toString()) #{technology.technology}
+						td #{technology.technologyDesc}
+						td #{technology.createdDate}

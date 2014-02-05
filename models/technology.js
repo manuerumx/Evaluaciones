@@ -1,5 +1,5 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+//var mongoose = require('mongoose');
+var Schema = require('mongoose').Schema;
 
 var technologySchema = new Schema({
 	technology 			: 	String,
@@ -8,10 +8,11 @@ var technologySchema = new Schema({
 	info: {
 		modifyDate : { 
 			type		: 	Date, 
-			default		: 	Date.now 
+			default		: 	Date.now
 		},
 		modifyby 		: 	String
 	}
 });
 
-exports.technologySchema = technologySchema;
+module.exports = technologySchema;
+//exports.technologySchema = technologySchema;

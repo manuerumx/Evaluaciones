@@ -1,19 +1,14 @@
+//Initializing the connection
+var mongoose 	= require('mongoose');
+var conf  		= require('../config');
+var db_lnk 		= conf.mongoSrv();
+//var db 			= mongoose.createConnection(db_lnk);
 
-/*
- * GET users listing.
- */
-var mongoose = require('mongoose');
-var db_lnk = 'mongodb://localhost/evaluaciones';
-var db = mongoose.createConnection(db_lnk);
 
 
 exports.list = function(req, res){
   
-  	
-  	var kittySchema = mongoose.Schema({
-	    name: String
-	});
-		
+  	console.log(db_lnk);
 
 	res.send("respond with a resource");
 };

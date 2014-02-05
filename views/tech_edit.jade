@@ -1,0 +1,19 @@
+extends layout
+block content
+	h2 #{title}
+	form(method='post')
+
+		p
+			label(for="nombre") Nombre:
+				input(type='text', name='nombre', value=technologys.technology)
+
+		p
+			label(for="descripcion") Descripción:
+				input(type='text', name='descripcion', size=100, value=technologys.technologyDesc)
+
+		p
+			label(for="fecha") Fecha:
+				input(type='text', name='fecha', value=technologys.createdDate)
+
+		p
+			input(type='submit', value='Guardar')
