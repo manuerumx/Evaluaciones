@@ -37,10 +37,13 @@ if ('development' == app.get('env')) {
 //Routes
 app.get('/', routes.index);
 app.get('/users', user.list);
+
 //Cat Technology
-app.get('/tech', technology.index);
+app.get('/technology-list/', technology.index);
 app.get('/technology/:id', technology.show_edit);
-app.get('/tech/crea', technology.create);
+app.post('/technology/:id', technology.update);
+app.post('/technology-new/', technology.create);
+app.get('/technology-new/', technology.create);
 
 http.createServer(app).listen(app.get('port'), function(){
 	console.log('Express server listening on port ' + app.get('port'));

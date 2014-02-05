@@ -4,20 +4,22 @@ block content
 	form(method='post')
 
 		p
-			label(for="nombre") Nombre:
-				input(type='text', name='nombre', value=technologys.technology)
+			label(for="technology") Nombre:
+				input(type='text', name='technology', value=technologys.technology)
 
 		p
-			label(for="descripcion") Descripción:
-				input(type='text', name='descripcion', size=100, value=technologys.technologyDesc)
+			label(for="techdesc") Descripción:
+				input(type='text', name='techdesc', size=100, value=technologys.technologyDesc)
 
 		p
-			label(for="fecha") Fecha:
-				input(type='text', name='fecha', value=technologys.createdDate)
+			label(for="createdDate") Fecha:
+				input(type='text', name='createdDate', value=technologys.createdDate)
 
-		p
-			label(for="modifyby") Modificado:
-				input(type='text', name='modifyby', value=technologys.info.modifyby)
+		- if (typeof(technologys.info) !== 'undefined'){
+			p
+				label(for="modifyby") Modificado:
+					input(type='text', name='modifyby', value=technologys.info.modifyby)
+		- }
 
 		p
 			input(type='submit', value='Guardar')
