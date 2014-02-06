@@ -6,14 +6,12 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 var app = express();
+var fs = require('fs');
 
 //Controllers
 var login = require('./controllers/c_login');
 var technology  = require('./controllers/c_technology');
 //End Controllers
-
-var fs = require('fs');
-var access_logfile = fs.createWriteStream('./log/access.log', {flags: 'a'});
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -23,6 +21,7 @@ app.use(express.favicon(__dirname + '/public/ico/favicon.ico'));
 app.use(express.logger('dev'));
 /*
 Production Setting
+var access_logfile = fs.createWriteStream('./log/access.log', {flags: 'a'});
 app.use(express.logger({stream: access_logfile }));
 */
 app.use(express.json());
@@ -38,8 +37,8 @@ if ('development' == app.get('env')) {
 
 //Login
 app.get('/', login.index);
-app.get('/login', login.login);
 app.post('/', login.index);
+app.get('/login', login.login);
 
 //Cat Technology
 app.get('/technology-list/', technology.index);
