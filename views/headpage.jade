@@ -7,8 +7,10 @@
 				span.icon-bar
 				span.icon-bar
 			a(href="#").navbar-brand #{title}
-		.collapse.navbar-collapse
-			ul.nav.navbar-nav
-				li.active: a(href="#") Home
-				li: a(href="#") About
-				li: a(href="#") Contact
+		- if (title !== 'Login'){
+			.collapse.navbar-collapse
+				ul.nav.navbar-nav
+					li.active: a(href="#") Home
+					li: a(href="#") About
+					li: a(href="#") Contact
+		- }

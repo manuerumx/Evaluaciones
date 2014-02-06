@@ -1,0 +1,8 @@
+extends layout
+block content
+  .container
+    form(method='post', role='form').form-signin
+      h2.form-signin-heading Please Sign in
+      input(type='text', name='email', placeholder='Email address', required, autofocus).form-control
+      input(type='password', name='password', placeholder='Password', required).form-control
+      button(type='submit').btn.btn-lg.btn-primary.btn-block Sign in

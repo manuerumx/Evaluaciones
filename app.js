@@ -3,12 +3,14 @@
  * Module dependencies.
  */
 var express = require('express');
-var routes = require('./routes');
-var user = require('./routes/user');
-var technology  = require('./controllers/c_technology');
 var http = require('http');
 var path = require('path');
 var app = express();
+
+//Controllers
+var login = require('./controllers/c_login');
+var technology  = require('./controllers/c_technology');
+//End Controllers
 
 var fs = require('fs');
 var access_logfile = fs.createWriteStream('./log/access.log', {flags: 'a'});
@@ -34,9 +36,10 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-//Routes
-app.get('/', routes.index);
-app.get('/users', user.list);
+//Login
+app.get('/', login.index);
+app.get('/login', login.login);
+app.post('/', login.index);
 
 //Cat Technology
 app.get('/technology-list/', technology.index);
