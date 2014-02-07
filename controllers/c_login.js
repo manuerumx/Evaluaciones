@@ -1,3 +1,5 @@
+var cryp = require('./cryptography');
+
 exports.index = function(req, res){
   res.render('index', { title: 'Bienvenido' });
 };
@@ -31,6 +33,6 @@ exports.validate = function(req, res){
 	}
 
 	function matchPassword(emailAddress,password){
-
+		var passwCryp = cryp.encrypt(password);
 	}
 }
