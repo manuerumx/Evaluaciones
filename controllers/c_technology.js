@@ -105,10 +105,10 @@ exports.create = function (req, res, next){
 		tech.save(onSaved);
 		function onSaved (err) {
 	      if (err) {
-	        console.log(err)
-	        return next(err)
+	        console.log(err);
+	        return next(err);
 	      }
-	      return res.redirect('/technology-list/')
+	      return res.redirect('/technology-list/');
 	    }
 	}	
 }

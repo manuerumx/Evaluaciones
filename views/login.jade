@@ -4,7 +4,7 @@ block content
     br
     form(method='post', role='form', action='/validate').form-signin
       h2.form-signin-heading Ingresa tus datos
-      input(type='text', name='email', placeholder='Email address', required, autofocus).form-control
+      input(type='text', name='username', placeholder='Username', required, autofocus).form-control
       input(type='password', name='password', placeholder='Password', required).form-control
       button(type='submit').btn.btn-lg.btn-primary.btn-block Sign in
       - if(error !== ''){

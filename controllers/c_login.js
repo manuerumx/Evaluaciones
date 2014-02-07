@@ -14,7 +14,7 @@ exports.login = function(req, res){
 }
 
 exports.register = function(req, res){
-	var today = new Date();
+/*	var today = new Date();
 	var db = mongoose.createConnection(db_lnk);
 	var user_schema = require('../models/users');
 	var User = db.model('Users', user_schema);
@@ -42,52 +42,56 @@ exports.register = function(req, res){
 			State 		: 		'DF'
 		}
 	});
-
 	usr.save(onSaved);
+
 	function onSaved (err) {
       if (err) {
-        console.log(err)
-        return next(err)
+        console.log(err);
+        return next(err);
       }
-      return res.redirect('/login')
+      return res.redirect('/login');
     }
+
+    function isValidEmail(emailAddress){
+		var pattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+		return emailAddress.match(pattern);
+	}*/
+
+    return res.redirect('/login');
 }
 
 exports.validate = function(req, res){
 	if (req.method === 'GET') {
 		return res.render('login', {title: 'Login', error:''});
 	} else if (req.method === 'POST') {
-		var f_email = req.body.email        || '';
-		var f_passw = req.body.password     || '';
-		if ( (!isValidEmail(f_email) ) || (f_passw === "") )
+		var f_user  = req.body.username        || '';
+		var f_passw = req.body.password        || '';
+		if ( (f_user === "") || (f_passw === "") )
 		{
-			console.log("Error: email or password nulls");
-			return res.render('login', {title: 'Login', error:'Error: Email invalid'});
+			console.log("Error: usuario or password nulls");
+			return res.render('login', {title: 'Login', error:'Error: usuario o password invalid'});
 		} else {
 			
 			var db = mongoose.createConnection(db_lnk);
 			var user_schema = require('../models/users');
 			var User = db.model('Users', user_schema);
-			var query = User.findOne({'username': 'f_username'});
+			var query = User.findOne({'username': f_user});
 			query.select('password email name middlename surename');
-			query.exec(function (err, user){
+			query.exec(function (err, obj){
 				if(err){
 					return handleError(err);
 				}else{
-					console.log("Lo encontramos");
-					console.log("");
+					if(matchPassword(f_passw) === obj.password){
+						return res.render('index', {title: 'Yuhuu'});
+					}else{
+						return res.render('login', {title: 'Login', error:'El usuario o password no coinciden'});
+					}
 				}
 			});
 		}
 	}
 
-
-	function isValidEmail(emailAddress){
-		var pattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
-		return emailAddress.match(pattern);
-	}
-
-	function matchPassword(emailAddress,password){
-		var passwCryp = cryp.encrypt(password);
+	function matchPassword(password){
+		return cryp.encrypt(password);
 	}
 }
