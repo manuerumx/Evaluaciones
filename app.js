@@ -41,7 +41,7 @@ app.use(function(req, res, next){
 	}
 	// respond with json
 	if (req.accepts('json')) {
-		res.send({ error: 'Not found' });
+		res.send({ error: 'this aren\'t the page you\'re looking for' });
 		return;
 	}
 	// default to plain-text. send()

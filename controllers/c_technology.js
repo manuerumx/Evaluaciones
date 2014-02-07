@@ -10,23 +10,15 @@ var technology_schema = require('../models/technology');
 			   //db.model(modelName, schema):
 var Technology = db.model('Technology', technology_schema);
 
-/**
- * @param   {Object}  req
- * @param   {Object}  res
- * @param   {Object}  next
- *																																																																																							
- * @api     public
- *
- * @url     GET       /
- */
 exports.index = function (req, res, next){
 	Technology.find(gotTechnologys);
 	function gotTechnologys(err, technologys){
 		if(err){
 			console.log(err);
 			return next();
-		}		
-		return res.render('technology/tech_list', {title: 'Lista de Tecnologias', technologys: technologys})
+		}
+		return res.render('technology/tech_list', 
+			{title: 'Lista de Tecnologias', technologys: technologys});
 	}
 }
 
@@ -38,7 +30,8 @@ exports.show_edit = function (req, res, next){
 			console.log(err);
 			return next(err);
 		}
-		return res.render('technology/tech_edit', {title: 'Ver Tecnologias',  technologys: technologys});
+		return res.render('technology/tech_edit', 
+			{title: 'Ver Tecnologias',  technologys: technologys});
 	}
 }
 
@@ -77,13 +70,14 @@ exports.update = function (req, res, next){
 	}
 }
 
-exports.remove = function (req, res, next){
-}
+/*exports.remove = function (req, res, next){ }*/
 
 exports.create = function (req, res, next){
 	var today = new Date();
 	if (req.method === 'GET') {
-		return res.render('technology/tech_edit', {title: 'Agregar Tecnologias', technologys: {}});
+		return res.render('technology/tech_edit', 
+			{title: 'Agregar Tecnologias', technologys: {}
+		});
 	}else if (req.method==='POST') {
 		var f_technology 		= req.body.technology     || '';
 		var f_technologyDesc 	= req.body.techdesc       || '';

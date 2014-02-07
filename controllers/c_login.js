@@ -46,6 +46,7 @@ exports.register = function(req, res){
 
 	function onSaved (err) {
       if (err) {
+      	db.close();
         console.log(err);
         return next(err);
       }
@@ -69,7 +70,8 @@ exports.validate = function(req, res){
 		if ( (f_user === "") || (f_passw === "") )
 		{
 			console.log("Error: usuario or password nulls");
-			return res.render('login', {title: 'Login', error:'Error: usuario o password invalid'});
+			return res.render('login', 
+				{title: 'Login', error:'Error: usuario o password invalid'});
 		} else {
 			
 			var db = mongoose.createConnection(db_lnk);
@@ -84,7 +86,9 @@ exports.validate = function(req, res){
 					if(matchPassword(f_passw) === obj.password){
 						return res.render('index', {title: 'Yuhuu'});
 					}else{
-						return res.render('login', {title: 'Login', error:'El usuario o password no coinciden'});
+						return res.render('login', 
+							{title: 'Login', 
+							error:'El usuario o password no coinciden'});
 					}
 				}
 			});
