@@ -6,11 +6,13 @@
 				span.icon-bar
 				span.icon-bar
 				span.icon-bar
-			a(href="#").navbar-brand Evaluaciones
-		- if (title !== 'Login'){
+			
 			.collapse.navbar-collapse
-				ul.nav.navbar-nav
-					li.active: a(href="#") Home
-					li: a(href="#") About
-					li: a(href="#") Contact
+		- if (title !== 'Login'){			
+			ul.nav.navbar-nav
+				li.active: a(href="#") Inicio
+				li: a(href="#") Acerca de
+				li: a(href="#") Contacto
 		- }
+//			ul.nav.navbar-nav.navbar-right
+//				li: a(href="/register") Registro? Quiero un registro?

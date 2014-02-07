@@ -41,6 +41,8 @@ app.post('/', login.index);
 app.get('/login', login.login);
 
 app.post('/validate', login.validate);
+//linea temporal
+app.get('/register', login.register);
 
 //Cat Technology
 app.get('/technology-list/', technology.index);
