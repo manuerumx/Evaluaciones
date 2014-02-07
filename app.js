@@ -40,6 +40,8 @@ app.get('/', login.index);
 app.post('/', login.index);
 app.get('/login', login.login);
 
+app.post('/validate', login.validate);
+
 //Cat Technology
 app.get('/technology-list/', technology.index);
 app.get('/technology/:id', technology.show_edit);

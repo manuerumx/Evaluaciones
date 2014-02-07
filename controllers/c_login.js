@@ -5,7 +5,7 @@ exports.index = function(req, res){
 };
 
 exports.login = function(req, res){
-	res.render('login', {title: 'Login'});
+	res.render('login', {title: 'Login', error:''});
 }
 
 exports.register = function(req, res){
@@ -13,16 +13,16 @@ exports.register = function(req, res){
 
 exports.validate = function(req, res){
 	if (req.method === 'GET') {
-		return res.render('login', {title: 'Login'});
+		return res.render('login', {title: 'Login', error:''});
 	} else if (req.method === 'POST') {
 		var f_email = req.body.email        || '';
 		var f_passw = req.body.password     || '';
 		if ( (!isValidEmail(f_email) ) || (f_passw === "") )
 		{
 			console.log("Error: email or password nulls");
-			return res.send('Empty Fields');
+			return res.render('login', {title: 'Login', error:'Error: Email invalid'});
 		} else {
-
+			return res.send('Iniciamos la validación contra Mongo');
 		}
 	}
 
