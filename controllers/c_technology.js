@@ -83,7 +83,7 @@ exports.remove = function (req, res, next){
 exports.create = function (req, res, next){
 	var today = new Date();
 	if (req.method === 'GET') {
-		return res.render('technology/tech_edit', {title: 'Agregar Tecnologias', technologys: {}})
+		return res.render('technology/tech_edit', {title: 'Agregar Tecnologias', technologys: {}});
 	}else if (req.method==='POST') {
 		var f_technology 		= req.body.technology     || '';
 		var f_technologyDesc 	= req.body.techdesc       || '';
