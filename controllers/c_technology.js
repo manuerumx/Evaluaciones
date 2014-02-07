@@ -14,7 +14,7 @@ var Technology = db.model('Technology', technology_schema);
  * @param   {Object}  req
  * @param   {Object}  res
  * @param   {Object}  next
- *
+ *																																																																																							
  * @api     public
  *
  * @url     GET       /
