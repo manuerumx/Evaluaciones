@@ -1,5 +1,6 @@
 //Initializing the connection
 var mongoose 	= require('mongoose');
+
 var conf  		= require('../config');
 var db_lnk 		= conf.mongoSrv();
 var cryp = require('./cryptography');
@@ -72,8 +73,7 @@ exports.validate = function(req, res){
 			console.log("Error: usuario or password nulls");
 			return res.render('login', 
 				{title: 'Login', error:'Error: usuario o password invalid'});
-		} else {
-			
+		} else {			
 			var db = mongoose.createConnection(db_lnk);
 			var user_schema = require('../models/users');
 			var User = db.model('Users', user_schema);
@@ -84,6 +84,7 @@ exports.validate = function(req, res){
 					return handleError(err);
 				}else{
 					if(matchPassword(f_passw) === obj.password){
+						req.session.logged = "true";
 						return res.render('index', {title: 'Yuhuu'});
 					}else{
 						return res.render('login', 

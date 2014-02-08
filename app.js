@@ -24,6 +24,10 @@ Production Setting
 var access_logfile = fs.createWriteStream('./log/access.log', {flags: 'a'});
 app.use(express.logger({stream: access_logfile }));
 */
+//Cookies
+app.use(express.cookieParser());
+app.use(express.session({secret: 'S3n01c@ul@V3'}));
+
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
@@ -54,14 +58,24 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-//Login
+//Index
 app.get('/', login.index);
-app.post('/', login.index);
+//Login
 app.get('/login', login.login);
-
 app.post('/validate', login.validate);
 //linea temporal
-app.get('/register', login.register);
+//app.get('/register', login.register);
+app.get('/register', function(req, res){
+	if(typeof(req.session) !== 'undefined'){
+		if(req.session.logged==="true"){
+			res.redirect('/technology-list/');
+		}else{
+			res.redirect('/login');
+		}
+	}else{
+		res.redirect('/login');
+	}
+});
 
 //Cat Technology
 app.get('/technology-list/', technology.index);
