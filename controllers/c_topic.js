@@ -1,5 +1,6 @@
 //Initializing the connection
 var mongoose 	= require('mongoose');
+var ObjectId 	= require('mongoose').Types.ObjectId;
 var conf  		= require('../config');
 var db_lnk 		= conf.mongoSrv();
 var db 			= mongoose.createConnection(db_lnk);
@@ -7,15 +8,20 @@ var db 			= mongoose.createConnection(db_lnk);
 var topic_schema = require('../models/topics');
 var Topic = db.model('Topics', topic_schema);
 
+var technology_schema = require('../models/technology');
+var Technology = db.model('Technology', technology_schema);
+
+
 exports.index = function (req, res, next){
-	Topic.find(gotTopics);
+	Topic.find(gotTopics).populate('technology_id');
 	function gotTopics(err, topics) {
 		if(err){
 			console.log(err);
 			return next();
 		}
+		var techs = Technology.find();
 		return res.render('topic/topic_list', 
-			{title: 'Lista de Topicos', topics: topics});
+			{title: 'Lista de Topicos', topics: topics, techs: techs});
 	}
 }
 
@@ -31,21 +37,23 @@ exports.show_edit = function (req, res, next){
 			console.log(err);
 			return next(err);
 		}
+		var techs = Technology.find();
 		return res.render('topic/topic_edit', 
-			{title: 'Ver Tecnologias',  topics: topics});
+			{title: 'Ver Tecnologias',  topics: topics, techs: techs});
 	}
 }
 
 exports.update = function (req, res, next) {
 	var id = req.params.id;
+	var f_technology_id = req.body.technology_id || '';
 	var f_topic 		= req.body.topic     	|| '';
 	var f_topicDesc 	= req.body.topicDesc    || '';
-	var f_modifyby		= req.body.modifyby     || '';
+	var f_modifyby		= req.session.userid      || '';
 	//Validamos
 	if((f_topic ==='') || (f_topicDesc==='')){		
 		return res.render('Error', {error: 'Error, Empty Fields'});
 	}
-	if (id.match(/^[0-9a-fA-F]{24}$/)) {
+	if (id.match(/^[0-9a-fA-F]{24}$/) && f_modifyby.match(/^[0-9a-fA-F]{24}$/)) {
 		Topic.findById(id, gotTopic);
 	}else{
 		return res.render('Error', {error: 'Id incorrecto'});
@@ -58,9 +66,10 @@ exports.update = function (req, res, next) {
 		if(!technology){
 			return res.render('Error', {error: 'Error,Invalid ID'});
 		}else{
+			topic.technology_id = "";
 			topic.topic = f_topic;
 			topic.topicDesc = f_topicDesc;
-			topic.info.modifyby = f_modifyby;
+			topic.modifyby = f_modifyby;
 			topic.save(onSaved);
 		}		
 	}
@@ -76,9 +85,15 @@ exports.update = function (req, res, next) {
 exports.create = function (req, res, next) {
 	var today = new Date();
 	if (req.method === 'GET') {
-		return res.render('topic/topic_edit', 
-			{title: 'Agregar Topicos', topics: {}
+		Technology.find( function (err, techs){ 
+			if(err){
+				return res.render('Error', {error: 'Error, There empty fields'});
+			}else{
+				return res.render('topic/topic_edit', {title: 'Agregar Topicos', topics: {}, techs: techs});
+			}
 		});
+		
+		
 	}else if (req.method==='POST') {
 		var f_topic 		= req.body.topic      	|| '';
 		var f_topicDesc 	= req.body.topicDesc    || '';
