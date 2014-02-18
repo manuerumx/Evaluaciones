@@ -78,13 +78,15 @@ exports.validate = function(req, res){
 			var user_schema = require('../models/users');
 			var User = db.model('Users', user_schema);
 			var query = User.findOne({'username': f_user});
-			query.select('password email name middlename surename');
+			query.select('_id password email name middlename surename');
 			query.exec(function (err, obj){
 				if(err){
 					return handleError(err);
 				}else{
 					if(matchPassword(f_passw) === obj.password){
 						req.session.logged = "true";
+						req.session.userid = obj._id;
+						req.session.name = obj.name;
 						return res.render('index', {title: 'Yuhuu'}); //Usuario logeado
 					}else{
 						return res.render('login', 

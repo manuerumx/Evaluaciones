@@ -7,8 +7,8 @@ var technologySchema = new Schema({
 		modifyDate : { 
 			type		: 	Date, 
 			default		: 	Date.now
-		},
-		modifyby 		: 	[Schema.Types.ObjectId]
-	}
+		}		
+	},
+	modifyby 		: 	[{type: Schema.Types.ObjectId, ref: 'Users'}]
 });
 module.exports = technologySchema;

@@ -1,13 +1,16 @@
 //Initializing the connection
 var mongoose 	= require('mongoose');
+var ObjectId 	= require('mongoose').Types.ObjectId;
 var conf  		= require('../config');
 var db_lnk 		= conf.mongoSrv();
 var db 			= mongoose.createConnection(db_lnk);
 
 //Creating variables to load the model
 var technology_schema = require('../models/technology');
+var user_schema = require('../models/users');
 			   //db.model(modelName, schema):
 var Technology = db.model('Technology', technology_schema);
+var User = db.model('Users', user_schema);
 
 exports.index = function (req, res, next){
 	Technology.find(gotTechnologys);
@@ -23,8 +26,10 @@ exports.index = function (req, res, next){
 
 exports.show_edit = function (req, res, next){
 	var id = req.params.id	
-	if (id.match(/^[0-9a-fA-F]{24}$/)) {
-		Technology.findById(id, gotTechnology);
+	//var idusr = req.session.userid;
+	var idusr  = '52f557a610f43b483445f0e2';			/*Mi ID de usuario hardcodeado*/
+	if (id.match(/^[0-9a-fA-F]{24}$/) && idusr.match(/^[0-9a-fA-F]{24}$/)) {
+		Technology.findById(id, gotTechnology).populate('modifyby');
 	}else{
 		return res.render('Error', {error: 'Id incorrecto'});
 	}
@@ -62,7 +67,7 @@ exports.update = function (req, res, next){
 		}else{
 			technology.technology = f_technology;
 			technology.technologyDesc = f_technologyDesc;
-			technology.info.modifyby = f_modifyby;
+			technology.modifyby = f_modifyby;
 			technology.save(onSaved);
 		}		
 	}
@@ -96,9 +101,7 @@ exports.create = function (req, res, next){
 			technology 			: 	f_technology,
 			technologyDesc 		: 	f_technologyDesc,
 			createdDate 		: 	today,
-			info: {
-				modifyby 		: 	"Manuel González"
-			}
+			modifyby 			: 	ObjectId('52f557a610f43b483445f0e2')			/*Mi ID de usuario hardcodeado*/
 		});
 		tech.save(onSaved);
 		function onSaved (err) {
