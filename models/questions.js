@@ -1,21 +1,20 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+var Schema = require('mongoose').Schema;
 
 var questionsSchema = new Schema({
-	subtopic_id 		: 	String,
+	subtopic_id 		: 	[{type: Schema.Types.ObjectId, ref: 'SubTopics'}],
 	question 			: 	String,
 	createdDate 		: 	Date,
 	info : {
 		modifyDate : { 
 			type		: 	Date, 
 			default		: 	Date.now 
-		},
-		modifyby 		: 	String
+		}
 	},
+	modifyby 		: 	[{type: Schema.Types.ObjectId, ref: 'Users'}],
 	answers : [{
 		answer			: 	String,
 		correct			: 	Boolean
 	}]
 });
 
-exports.questionsSchema = questionsSchema;
+module.exports = questionsSchema;

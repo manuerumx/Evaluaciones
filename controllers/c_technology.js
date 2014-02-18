@@ -7,10 +7,8 @@ var db 			= mongoose.createConnection(db_lnk);
 
 //Creating variables to load the model
 var technology_schema = require('../models/technology');
-var user_schema = require('../models/users');
-			   //db.model(modelName, schema):
 var Technology = db.model('Technology', technology_schema);
-var User = db.model('Users', user_schema);
+
 
 exports.index = function (req, res, next){
 	Technology.find(gotTechnologys);

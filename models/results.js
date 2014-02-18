@@ -1,9 +1,8 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+var Schema = require('mongoose').Schema;
 
 var resultsSchema = new Schema({
-	user_id 			: 	String,
-	assessments_id		: 	String, 
+	user_id 			: 	{type: Schema.Types.ObjectId, ref: 'Users'},
+	assessments_id		: 	{type: Schema.Types.ObjectId, ref: 'Asessments'}, 
 	info: {
 		startdate		: 	Date,
 		enddate			: 	Date,
@@ -16,3 +15,5 @@ var resultsSchema = new Schema({
 		expected		: 	String 
 	}
 });
+
+module.exports = resultsSchema;
