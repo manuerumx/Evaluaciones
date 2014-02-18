@@ -25,13 +25,11 @@ exports.index = function (req, res, next){
 }
 
 exports.show_edit = function (req, res, next){
-	var id = req.params.id	
-	//var idusr = req.session.userid;
-	var idusr  = '52f557a610f43b483445f0e2';			/*Mi ID de usuario hardcodeado*/
-	if (id.match(/^[0-9a-fA-F]{24}$/) && idusr.match(/^[0-9a-fA-F]{24}$/)) {
+	var id = req.params.id;	
+	if ( id.match(/^[0-9a-fA-F]{24}$/) ) {
 		Technology.findById(id, gotTechnology).populate('modifyby');
 	}else{
-		return res.render('Error', {error: 'Id incorrecto'});
+		return res.render('Error', {error: 'Id incorrecto o mal formado'});
 	}
 	function gotTechnology (err, technologys) {
 		if (err) {
@@ -47,12 +45,12 @@ exports.update = function (req, res, next){
 	var id = req.params.id;
 	var f_technology 		= req.body.technology     || '';
 	var f_technologyDesc 	= req.body.techdesc       || '';
-	var f_modifyby			= req.body.modifyby       || '';
+	var f_modifyby			= req.session.userid      || '';
 	//Validamos
 	if((f_technology ==='') || (f_technologyDesc==='')){		
 		return res.render('Error', {error: 'Error, Empty Fields'});
 	}
-	if (id.match(/^[0-9a-fA-F]{24}$/)) {
+	if (id.match(/^[0-9a-fA-F]{24}$/) && f_modifyby.match(/^[0-9a-fA-F]{24}$/)) {
 		Technology.findById(id, gotTechnology);
 	}else{
 		return res.render('Error', {error: 'Id incorrecto'});
