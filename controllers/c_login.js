@@ -85,7 +85,7 @@ exports.validate = function(req, res){
 				}else{
 					if(matchPassword(f_passw) === obj.password){
 						req.session.logged = "true";
-						return res.render('index', {title: 'Yuhuu'});
+						return res.render('index', {title: 'Yuhuu'}); //Usuario logeado
 					}else{
 						return res.render('login', 
 							{title: 'Login', 

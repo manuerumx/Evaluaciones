@@ -10,7 +10,8 @@ var fs = require('fs');
 
 //Controllers
 var login = require('./controllers/c_login');
-var technology  = require('./controllers/c_technology');
+var technology  = require('./controllers/c_technology'); 
+var topic  = require('./controllers/c_topic');
 //End Controllers
 
 // all environments
@@ -51,7 +52,7 @@ app.use(function(req, res, next){
 	// default to plain-text. send()
 	res.type('txt').send('Not found');
 });
-//404 Errors
+//End 404 Errors
 
 // development only
 if ('development' == app.get('env')) {
@@ -68,7 +69,7 @@ app.post('/validate', login.validate);
 app.get('/register', function(req, res){
 	if(typeof(req.session) !== 'undefined'){
 		if(req.session.logged==="true"){
-			res.redirect('/technology-list/');
+			res.redirect('/technology/list');
 		}else{
 			res.redirect('/login');
 		}
@@ -78,11 +79,19 @@ app.get('/register', function(req, res){
 });
 
 //Cat Technology
-app.get('/technology-list/', technology.index);
+app.get('/technology/list', technology.index);
 app.get('/technology/:id', technology.show_edit);
 app.post('/technology/:id', technology.update);
 app.post('/technology-new/', technology.create);
 app.get('/technology-new/', technology.create);
+
+//Cat Topic
+app.get('/topic/list', topic.index);
+app.get('/topic/:id', topic.show_edit);
+app.post('/topic/:id', topic.update);
+app.post('/topic-new/', topic.create);
+app.get('/topic-new/', topic.create);
+
 
 http.createServer(app).listen(app.get('port'), function(){
 	console.log('Express server listening on port ' + app.get('port'));

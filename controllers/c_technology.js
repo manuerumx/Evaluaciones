@@ -5,7 +5,6 @@ var db_lnk 		= conf.mongoSrv();
 var db 			= mongoose.createConnection(db_lnk);
 
 //Creating variables to load the model
-
 var technology_schema = require('../models/technology');
 			   //db.model(modelName, schema):
 var Technology = db.model('Technology', technology_schema);
@@ -23,8 +22,12 @@ exports.index = function (req, res, next){
 }
 
 exports.show_edit = function (req, res, next){
-	var id = req.params.id
-	Technology.findById(id, gotTechnology);
+	var id = req.params.id	
+	if (id.match(/^[0-9a-fA-F]{24}$/)) {
+		Technology.findById(id, gotTechnology);
+	}else{
+		return res.render('Error', {error: 'Id incorrecto'});
+	}
 	function gotTechnology (err, technologys) {
 		if (err) {
 			console.log(err);
@@ -41,19 +44,21 @@ exports.update = function (req, res, next){
 	var f_technologyDesc 	= req.body.techdesc       || '';
 	var f_modifyby			= req.body.modifyby       || '';
 	//Validamos
-	if((f_technology ==='') || (f_technologyDesc==='')){
-		console.log('Error: Empty fields');
-		return res.send('There empty fields');
+	if((f_technology ==='') || (f_technologyDesc==='')){		
+		return res.render('Error', {error: 'Error, Empty Fields'});
 	}
-	Technology.findById(id, gotTechnology);
+	if (id.match(/^[0-9a-fA-F]{24}$/)) {
+		Technology.findById(id, gotTechnology);
+	}else{
+		return res.render('Error', {error: 'Id incorrecto'});
+	}	
 	function gotTechnology (err, technology) {
 		if(err){
 			console.log(err);
 			return next(err);
 		}
 		if(!technology){
-			console.log('Error: Id not exist');
-			return res.send('Invalid ID');
+			return res.render('Error', {error: 'Error,Invalid ID'});
 		}else{
 			technology.technology = f_technology;
 			technology.technologyDesc = f_technologyDesc;
@@ -84,8 +89,7 @@ exports.create = function (req, res, next){
 		var f_modifyby			= req.body.modifyby       || '';
 		//Validamos
 		if((f_technology ==='') || (f_technologyDesc==='')){
-			console.log('Error: Empty fields');
-			return res.send('There empty fields');
+			return res.render('Error', {error: 'Error, There empty fields'});
 		}
 		// Creamos el documento y lo guardamos
 		var tech = new Technology({
@@ -102,7 +106,7 @@ exports.create = function (req, res, next){
 	        console.log(err);
 	        return next(err);
 	      }
-	      return res.redirect('/technology-list/');
+	      return res.redirect('/technology/list');
 	    }
 	}	
 }

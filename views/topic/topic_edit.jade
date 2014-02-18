@@ -1,0 +1,15 @@
+extends ../layout
+block content
+	h2 #{title}
+	form(method='post')
+		p
+			label(for="topic") Nombre
+				input(type='text', name='topic', value=topics.topic)
+		p
+			label(for="topicDesc") Descripción
+				input(type='text', name='topicDesc', value=topics.topicDesc)
+		p
+			label(for="createdDate") Fecha:
+				input(type='text', name='createdDate', value=topics.createdDate)
+		p
+			input(type='submit', value='Guardar')
