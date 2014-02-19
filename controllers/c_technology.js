@@ -87,7 +87,7 @@ exports.create = function (req, res, next){
 	}else if (req.method==='POST') {
 		var f_technology 		= req.body.technology     || '';
 		var f_technologyDesc 	= req.body.techdesc       || '';
-		var f_modifyby			= req.body.modifyby       || '';
+		var f_modifyby			= req.session.userid      || '';
 		//Validamos
 		if((f_technology ==='') || (f_technologyDesc==='')){
 			return res.render('Error', {error: 'Error, There empty fields'});
@@ -97,7 +97,7 @@ exports.create = function (req, res, next){
 			technology 			: 	f_technology,
 			technologyDesc 		: 	f_technologyDesc,
 			createdDate 		: 	today,
-			modifyby 			: 	ObjectId('52f557a610f43b483445f0e2')			/*Mi ID de usuario hardcodeado*/
+			modifyby 			: 	ObjectId(f_modifyby)			/*Mi ID de usuario hardcodeado*/
 		});
 		tech.save(onSaved);
 		function onSaved (err) {

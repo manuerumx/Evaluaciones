@@ -19,9 +19,8 @@ exports.index = function (req, res, next){
 			console.log(err);
 			return next();
 		}
-		var techs = Technology.find();
 		return res.render('topic/topic_list', 
-			{title: 'Lista de Topicos', topics: topics, techs: techs});
+			{title: 'Lista de Topicos', topics: topics});
 	}
 }
 
@@ -37,18 +36,23 @@ exports.show_edit = function (req, res, next){
 			console.log(err);
 			return next(err);
 		}
-		var techs = Technology.find();
-		return res.render('topic/topic_edit', 
-			{title: 'Ver Tecnologias',  topics: topics, techs: techs});
+		Technology.find( function (err, techs){ 
+			if(err){
+				return res.render('Error', {error: 'Error, Find Technology go Wrong - EDIT'});
+			}else{
+				return res.render('topic/topic_edit', {title: 'Ver Topicos',  topics: topics, techs: techs});
+			}
+		});
+		
 	}
 }
 
 exports.update = function (req, res, next) {
 	var id = req.params.id;
 	var f_technology_id = req.body.technology_id || '';
-	var f_topic 		= req.body.topic     	|| '';
-	var f_topicDesc 	= req.body.topicDesc    || '';
-	var f_modifyby		= req.session.userid      || '';
+	var f_topic 		= req.body.topic     	 || '';
+	var f_topicDesc 	= req.body.topicDesc     || '';
+	var f_modifyby		= req.session.userid     || '';
 	//Validamos
 	if((f_topic ==='') || (f_topicDesc==='')){		
 		return res.render('Error', {error: 'Error, Empty Fields'});
@@ -87,31 +91,29 @@ exports.create = function (req, res, next) {
 	if (req.method === 'GET') {
 		Technology.find( function (err, techs){ 
 			if(err){
-				return res.render('Error', {error: 'Error, There empty fields'});
+				return res.render('Error', {error: 'Error, Find Technology go wrong'});
 			}else{
 				return res.render('topic/topic_edit', {title: 'Agregar Topicos', topics: {}, techs: techs});
 			}
 		});
-		
-		
-	}else if (req.method==='POST') {
+	} else if (req.method==='POST') {
+		var f_technology_id = req.body.technology   || '';
 		var f_topic 		= req.body.topic      	|| '';
 		var f_topicDesc 	= req.body.topicDesc    || '';
-		var f_modifyby		= req.body.modifyby     || '';
+		var f_modifyby		= req.session.userid    || '';
 		//Validamos
 		if((f_topic ==='') || (f_topicDesc==='')){
 			return res.render('Error', {error: 'Error, There empty fields'});
 		}
 		// Creamos el documento y lo guardamos
 		var topc = new Topic({
+			technology_id   :   ObjectId(f_technology_id),
 			topic 			: 	f_topic,
 			topicDesc 		: 	f_topicDesc,
 			createdDate 	: 	today,
-			info: {
-				modifyby 		: 	"Manuel González"
-			}
+			modifyby 		: 	ObjectId(f_modifyby)
 		});
-		tech.save(onSaved);
+		topc.save(onSaved);
 		function onSaved (err) {
 	      if (err) {
 	        console.log(err);

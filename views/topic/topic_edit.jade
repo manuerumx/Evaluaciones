@@ -2,10 +2,10 @@ extends ../layout
 block content
 	h2 #{title}
 	form(method='post')
-		select(id='technology')
+		select(id='technology', name="technology")
 			if (techs)
 				each tech in techs
-					option(id = tech._id.toString(), value=tech.technology) #{tech.technology}
+					option(id = tech._id.toString(), value=tech._id.toString() ) #{tech.technology}
 		p
 			label(for="topic") Nombre
 				input(type='text', name='topic', value=topics.topic)

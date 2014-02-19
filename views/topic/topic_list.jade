@@ -15,5 +15,5 @@ block content
                                 a(href="/topic/" + topic._id.toString()) #{topic.topic}
                             td #{topic.topicDesc}
                             td #{topic.createdDate}
-                            td #{topic.technology_id.technology}
+                            td #{topic.technology_id[0].technology}
         a(href="/topic-new/") #nueva
