@@ -64,8 +64,12 @@ app.get('/', login.index);
 //Login
 app.get('/login', login.login);
 app.post('/validate', login.validate);
-//linea temporal
-//app.get('/register', login.register);
+
+//linea temporal para rellenar los datos de la base
+//var scaffold = require('./controllers/c_scaffold');
+//app.get('/scaffold', scaffold.rellena);
+
+
 app.get('/register', function(req, res){
 	if(typeof(req.session) !== 'undefined'){
 		if(req.session.logged==="true"){
