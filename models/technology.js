@@ -1,6 +1,4 @@
-//var mongoose = require('mongoose');
 var Schema = require('mongoose').Schema;
-
 var technologySchema = new Schema({
 	technology 			: 	String,
 	technologyDesc 		: 	String,
@@ -9,10 +7,8 @@ var technologySchema = new Schema({
 		modifyDate : { 
 			type		: 	Date, 
 			default		: 	Date.now
-		},
-		modifyby 		: 	String
-	}
+		}		
+	},
+	modifyby 		: 	[{type: Schema.Types.ObjectId, ref: 'Users'}]
 });
-
 module.exports = technologySchema;
-//exports.technologySchema = technologySchema;

@@ -1,8 +1,6 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-
+var Schema = require('mongoose').Schema;
 var topicSchema = new Schema({
-	technology_id 		: 	String,
+	technology_id 		: 	[{type: Schema.Types.ObjectId, ref: 'Technology'}],
 	topic 				: 	String,
 	topicDesc 			: 	String,
 	createdDate 		: 	Date,
@@ -10,9 +8,8 @@ var topicSchema = new Schema({
 		modifyDate : { 
 			type		: 	Date, 
 			default		: 	Date.now 
-		},
-		modifyby 		: 	String
-	}
+		}		
+	},
+	modifyby 		: 	[{type: Schema.Types.ObjectId, ref: 'Users'}]
 });
-
-exports.topicSchema = topicSchema;
+module.exports = topicSchema;

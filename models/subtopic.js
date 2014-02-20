@@ -1,8 +1,7 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+var Schema = require('mongoose').Schema;
 
 var subTopicSchema = new Schema({
-	topic_id 			: 	String,
+	topic_id 			: 	[{type: Schema.Types.ObjectId, ref: 'Topics'}],
 	subTopic 			: 	String,
 	subTopicDesc 		: 	String,
 	createdDate 		: 	Date,
@@ -10,9 +9,9 @@ var subTopicSchema = new Schema({
 		modifyDate : { 
 			type		: 	Date, 
 			default		: 	Date.now 
-		},
-		modifyby 		: 	String
-	}
+		}
+	},
+	modifyby 		: 	[{type: Schema.Types.ObjectId, ref: 'Users'}]
 });
 
-exports.subTopicSchema = subTopicSchema;
+module.exports = subTopicSchema;

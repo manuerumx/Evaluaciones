@@ -1,0 +1,19 @@
+extends ../layout
+block content
+    .container
+        h2 Tabla de Topicos
+        table(border='1')
+            tr
+                th Topico
+                th Descripcion
+                th Fecha de Creación
+                th Tecnología
+                if (topics)
+                    each topic in topics
+                        tr
+                            td
+                                a(href="/topic/" + topic._id.toString()) #{topic.topic}
+                            td #{topic.topicDesc}
+                            td #{topic.createdDate}
+                            td #{topic.technology_id[0].technology}
+        a(href="/topic-new/") #nueva

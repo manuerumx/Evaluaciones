@@ -6,8 +6,8 @@ var userSchema = new Schema({
 	password		: 		String,
 	email 			: 		String,
 	name 			: 		String,
-	middlename 		: 		String,
-	surename 		: 		String,
+	lastname 		: 		String,
+	lastname2 		: 		String,
 	createdDate 	: 		Date,
 	updated 		: 		Date,
 	active 			: 		Boolean,
@@ -25,4 +25,4 @@ var userSchema = new Schema({
 	}
 });
 
-exports.userSchema = userSchema;
+module.exports = userSchema;

@@ -1,5 +1,4 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+var Schema = require('mongoose').Schema;
 
 var assessmentsSchema = new Schema({
 	name 				: 	String,
@@ -18,4 +17,4 @@ var assessmentsSchema = new Schema({
 	}
 });
 
-exports.assessmentsSchema = assessmentsSchema;
+module.exports = assessmentsSchema;
