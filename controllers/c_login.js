@@ -15,7 +15,7 @@ exports.login = function(req, res){
 }
 
 exports.register = function(req, res){
-/*	var today = new Date();
+	/*	var today = new Date();
 	var db = mongoose.createConnection(db_lnk);
 	var user_schema = require('../models/users');
 	var User = db.model('Users', user_schema);
@@ -46,15 +46,15 @@ exports.register = function(req, res){
 	usr.save(onSaved);
 
 	function onSaved (err) {
-      if (err) {
-      	db.close();
-        console.log(err);
-        return next(err);
-      }
-      return res.redirect('/login');
-    }
+	  if (err) {
+	  	db.close();
+	    console.log(err);
+	    return next(err);
+	  }
+	  return res.redirect('/login');
+	}
 
-    function isValidEmail(emailAddress){
+	function isValidEmail(emailAddress){
 		var pattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
 		return emailAddress.match(pattern);
 	}*/

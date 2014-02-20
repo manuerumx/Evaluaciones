@@ -1,26 +1,27 @@
 extends ../layout
 block content
-	h2 #{title}
-	form(method='post')
-		p
-			label(for="technology") Nombre:
-				input(type='text', name='technology', value=technologys.technology)
-
-		p
-			label(for="techdesc") Descripción:
-				input(type='text', name='techdesc', size=100, value=technologys.technologyDesc)
-
-		p
-			label(for="createdDate") Fecha:
-				input(type='text', name='createdDate', value=technologys.createdDate)
-
-		- if (typeof(technologys.info) !== 'undefined'){
+	.container
+		h2 #{title}
+		form(method='post')
 			p
-				label(for="modifyby") Ultima modificación por  
-					span.label.label-info #{technologys.modifyby[0].email}  
-					span   el  
-					span.label.label-success #{technologys.info.modifyDate}
-		- }
+				label(for="technology") Nombre:
+					input(type='text', name='technology', value=technologys.technology)
 
-		p
-			input(type='submit', value='Guardar')
+			p
+				label(for="techdesc") Descripción:
+					input(type='text', name='techdesc', size=100, value=technologys.technologyDesc)
+
+			p
+				label(for="createdDate") Fecha:
+					input(type='text', name='createdDate', value=technologys.createdDate)
+
+			- if (typeof(technologys.info) !== 'undefined'){
+				p
+					label(for="modifyby") Ultima modificación por  
+						span.label.label-info #{technologys.modifyby[0].email}  
+						span   el  
+						span.label.label-success #{technologys.info.modifyDate}
+			- }
+
+			p
+				input(type='submit', value='Guardar')

@@ -4,6 +4,7 @@ var ObjectId 	= require('mongoose').Types.ObjectId;
 var conf  		= require('../config');
 var db_lnk 		= conf.mongoSrv();
 var db 			= mongoose.createConnection(db_lnk);
+
 //Creating variables to load the model
 var topic_schema = require('../models/topics');
 var Topic = db.model('Topics', topic_schema);
@@ -29,7 +30,7 @@ exports.show_edit = function (req, res, next){
 	if (id.match(/^[0-9a-fA-F]{24}$/)) {
 		Topic.findById(id, gotTopic);
 	}else{
-		return res.render('Error', {error: 'Id incorrecto'});
+		return res.render('error', {error: 'Id incorrecto'});
 	}
 	function gotTopic (err, topics) {
 		if (err) {
@@ -38,7 +39,7 @@ exports.show_edit = function (req, res, next){
 		}
 		Technology.find( function (err, techs){ 
 			if(err){
-				return res.render('Error', {error: 'Error, Find Technology go Wrong - EDIT'});
+				return res.render('error', {error: 'Error, Find Technology go Wrong - EDIT'});
 			}else{
 				return res.render('topic/topic_edit', {title: 'Ver Topicos',  topics: topics, techs: techs});
 			}
@@ -55,12 +56,12 @@ exports.update = function (req, res, next) {
 	var f_modifyby		= req.session.userid     || '';
 	//Validamos
 	if((f_topic ==='') || (f_topicDesc==='')){		
-		return res.render('Error', {error: 'Error, Empty Fields'});
+		return res.render('error', {error: 'Error, Empty Fields'});
 	}
 	if (id.match(/^[0-9a-fA-F]{24}$/) && f_modifyby.match(/^[0-9a-fA-F]{24}$/)) {
 		Topic.findById(id, gotTopic);
 	}else{
-		return res.render('Error', {error: 'Id incorrecto'});
+		return res.render('error', {error: 'Id incorrecto'});
 	}	
 	function gotTopic (err, topic) {
 		if(err){
@@ -68,7 +69,7 @@ exports.update = function (req, res, next) {
 			return next(err);
 		}
 		if(!technology){
-			return res.render('Error', {error: 'Error,Invalid ID'});
+			return res.render('error', {error: 'Error,Invalid ID'});
 		}else{
 			topic.technology_id = "";
 			topic.topic = f_topic;
@@ -91,7 +92,7 @@ exports.create = function (req, res, next) {
 	if (req.method === 'GET') {
 		Technology.find( function (err, techs){ 
 			if(err){
-				return res.render('Error', {error: 'Error, Find Technology go wrong'});
+				return res.render('error', {error: 'Error, Find Technology go wrong'});
 			}else{
 				return res.render('topic/topic_edit', {title: 'Agregar Topicos', topics: {}, techs: techs});
 			}
@@ -103,7 +104,7 @@ exports.create = function (req, res, next) {
 		var f_modifyby		= req.session.userid    || '';
 		//Validamos
 		if((f_topic ==='') || (f_topicDesc==='')){
-			return res.render('Error', {error: 'Error, There empty fields'});
+			return res.render('error', {error: 'Error, There empty fields'});
 		}
 		// Creamos el documento y lo guardamos
 		var topc = new Topic({

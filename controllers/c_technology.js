@@ -9,6 +9,9 @@ var db 			= mongoose.createConnection(db_lnk);
 var technology_schema = require('../models/technology');
 var Technology = db.model('Technology', technology_schema);
 
+//
+var user_schema = require('../models/users');
+var User = db.model('Users', user_schema);
 
 exports.index = function (req, res, next){
 	Technology.find(gotTechnologys);
@@ -27,7 +30,7 @@ exports.show_edit = function (req, res, next){
 	if ( id.match(/^[0-9a-fA-F]{24}$/) ) {
 		Technology.findById(id, gotTechnology).populate('modifyby');
 	}else{
-		return res.render('Error', {error: 'Id incorrecto o mal formado'});
+		return res.render('error', {error: 'Id incorrecto o mal formado'});
 	}
 	function gotTechnology (err, technologys) {
 		if (err) {
@@ -46,12 +49,12 @@ exports.update = function (req, res, next){
 	var f_modifyby			= req.session.userid      || '';
 	//Validamos
 	if((f_technology ==='') || (f_technologyDesc==='')){		
-		return res.render('Error', {error: 'Error, Empty Fields'});
+		return res.render('error', {error: 'Error, Empty Fields'});
 	}
 	if (id.match(/^[0-9a-fA-F]{24}$/) && f_modifyby.match(/^[0-9a-fA-F]{24}$/)) {
 		Technology.findById(id, gotTechnology);
 	}else{
-		return res.render('Error', {error: 'Id incorrecto'});
+		return res.render('error', {error: 'Id incorrecto'});
 	}	
 	function gotTechnology (err, technology) {
 		if(err){
@@ -59,7 +62,7 @@ exports.update = function (req, res, next){
 			return next(err);
 		}
 		if(!technology){
-			return res.render('Error', {error: 'Error,Invalid ID'});
+			return res.render('error', {error: 'Error,Invalid ID'});
 		}else{
 			technology.technology = f_technology;
 			technology.technologyDesc = f_technologyDesc;
@@ -90,7 +93,7 @@ exports.create = function (req, res, next){
 		var f_modifyby			= req.session.userid      || '';
 		//Validamos
 		if((f_technology ==='') || (f_technologyDesc==='')){
-			return res.render('Error', {error: 'Error, There empty fields'});
+			return res.render('error', {error: 'Error, There empty fields'});
 		}
 		// Creamos el documento y lo guardamos
 		var tech = new Technology({
